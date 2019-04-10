@@ -10,7 +10,7 @@ var indexRouter = require('./routes/index');
 var app = express();
 
 // view engine setup
-app.engine('.hbs', expressHbs({defaultLayout: 'layout', extName: 'hbs' }));
+app.engine('.hbs', expressHbs({defaultLayout: 'layout', extName: '.hbs' }));
 app.set('view engine', '.hbs');
 
 app.use(logger('dev'));
