@@ -5,9 +5,21 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 // var bodyparser = require('body-parser');
 var expressHbs = require('express-handlebars');
+var mongoose = require('mongoose');
 var indexRouter = require('./routes/index');
 
 var app = express();
+
+mongoose.connect('mongodb+srv://fcc_admin:menno0987@cluster0-3kqww.azure.mongodb.net/webstore?retryWrites=true, { useNewUrlParser: true } ');
+
+// const MongoClient = require(‘mongodb’).MongoClient;
+// const uri = "mongodb+srv://fcc_admin:menno0987@cluster0-3kqww.azure.mongodb.net/test?retryWrites=true";
+// const client = new MongoClient(uri, { useNewUrlParser: true });
+// client.connect(err => {
+//   const collection = client.db("test").collection("devices");
+//   // perform actions on the collection object
+//   client.close();
+// });
 
 // view engine setup
 app.engine('.hbs', expressHbs({defaultLayout: 'layout', extName: '.hbs' }));
