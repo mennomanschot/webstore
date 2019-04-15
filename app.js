@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var dotenv = require('dotenv').config()
 // var bodyparser = require('body-parser');
 var expressHbs = require('express-handlebars');
 var mongoose = require('mongoose');
@@ -10,7 +11,15 @@ var indexRouter = require('./routes/index');
 
 var app = express();
 
-mongoose.connect('mongodb+srv://fcc_admin:menno0987@cluster0-3kqww.azure.mongodb.net/webstore?retryWrites=true, { useNewUrlParser: true } ');
+mongoose.connect(process.env.MONGO_URI,{useNewUrlParser: true});
+mongoose.connection.on("open", function(ref) {
+  console.log("Connected to mongo server.");
+});
+mongoose.connection.on("error", function(err) {
+  console.log("Could not connect to mongo server!");
+  return console.log(err);
+});
+
 
 // const MongoClient = require(‘mongodb’).MongoClient;
 // const uri = "mongodb+srv://fcc_admin:menno0987@cluster0-3kqww.azure.mongodb.net/test?retryWrites=true";
