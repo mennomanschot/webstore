@@ -1,2 +1,3 @@
 # file with DB keys
 .env
+/node_modules

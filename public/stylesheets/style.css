@@ -1,5 +1,6 @@
 .card img {
   max-height: 150px;
+  object-fit: contain;
 }
 .card .description {
   color: #7f7f7f;
