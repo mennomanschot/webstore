@@ -1,5 +1,6 @@
 var Product = require('../models/product');
 var mongoose = require('mongoose');
+var dotenv = require('dotenv').config()
 require('dotenv').config({ path: '../.env' });
 
 mongoose.connect(process.env.MONGO_URI,{useNewUrlParser: true});
@@ -31,16 +32,11 @@ var products = [
   }),
 ];
 
-var done = 0;
-for (var i = 0; 1 < products.length; i++) {
-    products[i].save(function(err, result) {
-    done++;
-     if (done === products.length) {
-       exit();
+products.map((p, index) => {
+   p.save((err, result) => {
+     if(index === products.length - 1) {
+       console.log('DONE!');
+       mongoose.disconnect();
      }
-  });
-}
-
-function exit() {
-  mongoose.disconnect();
-}
+   });
+  });﻿
