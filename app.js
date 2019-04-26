@@ -22,6 +22,7 @@ mongoose.connection.on("error", function(err) {
   console.log("Could not connect to mongo server!");
   return console.log(err);
 });
+require('./config/passport');
 
 
 // view engine setup
