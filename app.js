@@ -4,10 +4,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var dotenv = require('dotenv').config()
-// var bodyparser = require('body-parser');
 var expressHbs = require('express-handlebars');
 var mongoose = require('mongoose');
 var session = require('express-session');
+var passport = require('passport');
+var flash = require('connect-flash');
 
 var indexRouter = require('./routes/index');
 
@@ -23,24 +24,19 @@ mongoose.connection.on("error", function(err) {
 });
 
 
-// const MongoClient = require(‘mongodb’).MongoClient;
-// const uri = "mongodb+srv://fcc_admin:menno0987@cluster0-3kqww.azure.mongodb.net/test?retryWrites=true";
-// const client = new MongoClient(uri, { useNewUrlParser: true });
-// client.connect(err => {
-//   const collection = client.db("test").collection("devices");
-//   // perform actions on the collection object
-//   client.close();
-// });
-
 // view engine setup
 app.engine('.hbs', expressHbs({defaultLayout: 'layout', extName: '.hbs' }));
 app.set('view engine', '.hbs');
 
+// middleware collection setup
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(session({secret: 'verysecretcode', resave: false, saveUninitialized: false}));
+app.use(session({secret: 'mysupersecret', resave: false, saveUninitialized: false}));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
