@@ -36,7 +36,7 @@ router.get('/shopping-cart', function(req, res, next) {
 
 router.get('/checkout', function(req, res, next) {
   if(!req.session.cart) {
-    return res.redirect('/shopping-cart', {products: null});
+    return res.render('shop/shopping-cart', {products: null});
   }
     var cart = new Cart(req.session.cart);
     res.render('shop/checkout', {total: cart.totalPrice});
