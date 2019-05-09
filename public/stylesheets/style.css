@@ -16,3 +16,6 @@
 a {
   color: inherit;
 }
+.hidden {
+  display: none
+}
