@@ -8,6 +8,7 @@ var $form = $('#checkout-form');
 
 $form.submit(function(event) {
   $form.find('button').prop('disabled', true);
+  $('#charge-error').addClass('hidden');
       Stripe.card.createToken({
       number: $('#card-number').val(),
       cvc: $('#card-cvc').val(),
@@ -22,10 +23,9 @@ function stripeResponseHandler(status, response) {
   if (response.error) { // Problem!
 
    // Show the errors on the form
-   $form.find('#charge-errors').text(response.error.message);
-   // hidden class is deprecated in Bootstrap 4 > check docs. refactor TODO
-   $form.find('#charge-errors').removeClass('hidden');
-   $form.find('button').prop('disabled', false); // Re-enable submission
+   $('#charge-error').text(response.error.message);
+   $('#charge-error').removeClass('hidden');
+   $('button').prop('disabled', false); // Re-enable submission
 
  } else { // Token was created!
 
