@@ -1,8 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var Cart = require('../models/cart');
 
+var Cart = require('../models/cart');
 var Product = require('../models/product');
+var Order = require('../models/order');
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -66,11 +68,24 @@ router.post('/checkout', function(req, res, next) {
       req.flash('error', err.message);
       res.redirect('/checkout');
     }
-    req.flash('success', 'purchase successful');
-    req.session.cart = null;
-    res.redirect('/');
+    var order = new Order({
+      user:req.user,
+      cart: cart,
+      address: req.body.address,
+      name: req.body.name,
+      paymentId: charge.id
+    });
+    order.save(function(err, result) {
+      if (err) {
+        req.flash('error', err.message);
+        res.redirect('/');
+      }
+      req.flash('success', 'purchase successful');
+      req.session.cart = null;
+      res.redirect('/');
+      console.log('purchase successful')
+    });
   });
-
 });
 
 module.exports = router;
